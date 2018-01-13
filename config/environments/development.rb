@@ -32,14 +32,14 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:       'smtp.gmail.com',
-    port:           587,
+    port:           25,
     domain:         "Upasthitidomain.com",
     user_name:      "blackviking2110@gmail.com",
-    password:       "JerryPatel",
+    password:       ENV['SMTP_PASSWORD'],
     authentication: 'plain',
     enable_starttls_auto: true
   }
-  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   
   config.action_mailer.perform_caching = false
   
