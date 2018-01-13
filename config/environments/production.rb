@@ -68,7 +68,7 @@ Rails.application.configure do
     port:           587,
     domain:         "Upasthitidomain.com",
     user_name:      "blackviking2110@gmail.com",
-    password:       ENV['SMTP_PASSWORD'],
+    password:       "JerryPatel",
     authentication: 'plain',
     enable_starttls_auto: true
   }
