@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  
+  <div class="row" id="banner">
+    <div class="col-lg-12">
+      
+      <div class="row" id="header">
+        <div class="col-lg-12">
+          <%= link_to "Online Attendance Portal", root_path, id: "header_text" %>  
+        </div>
+      </div>
+      
+      <div class="row" id="logo">
+        <div class="col-lg-12">
+            <center>
+              <%= image_tag('jumbotron.jpg', id: "logo_image") %>
+              <h3>YMCA University Attendance Management System</h3>
+            </center>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="row" id="page-container">
+    
+    <div class="row" id="margin_row">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="box">
+        <div class="panel panel-default" id="box-panel" style="background-color: #201f29">
+          
+          <div class="panel-heading" style="background-color: #201f29">
+            <div class="panel-title" style="color: #FFFFFF">
+              <center>
+                <h4>LOGIN</h4>
+              </center>
+            </div>
+          </div>
+          
+          <div class="panel-body">
+            <center>
+              <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+                <%= devise_error_messages! %>
+                
+                <div class="form-group">  
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="glyphicon glyphicon-user"></i>
+                    </span>
+                    <%= f.email_field :email, autofocus: true, placeholder: "Email", class: "form-control" %>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <center>
+                    <%= f.submit "Reset", class: "btn btn_highlight" %>
+                  </center>
+                </div>
+              <% end %>
+            </center>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <center><a><%= render "devise/shared/links" %></a></center>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,179 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="visible-md visible-lg">
+      <div class="col-md-2 col-lg-2" id="sidebar_menu" style="height: 135vh">
+        
+        <div class="row" id="logo-env">
+          <div class="col-md-12 col-lg-12">
+            <center>
+              <%= image_tag('jumbotron.jpg', id: "logo_image-env") %>
+            </center>
+          </div>
+        </div>
+        <hr></hr>
+        
+        <div class="row" id="main-menu">
+          <div class="col-md-12 col-lg-12" style="margin-bottom: 2rem">
+              <i class="glyphicon glyphicon-dashboard"></i>
+              <%= link_to "DASH", root_path %>
+              <hr></hr>
+          </div>
+          <% if current_user.access_right == "teacher" %>
+          <div class="col-md-12 col-lg-12" style="margin-bottom: 2rem">
+              <i class="glyphicon glyphicon-list-alt"></i>
+              <%= link_to "DAILY ATTENDANCE", attendancesheets_path %>
+              <hr></hr>
+          </div>
+          <% end %>
+          <div class="col-md-12 col-lg-12" style="margin-bottom: 2rem">
+              <i class="glyphicon glyphicon-log-out"></i>
+              <%= link_to "LOGOUT", destroy_user_session_path, method: :delete %>
+              <hr></hr>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="col-md-1 col-lg-1"></div>
+      <div class="col-md-9 col-lg-9" id="main_header">
+        <h3>YMCA University Attendance Management System</h3>
+        <br>
+        <hr></hr>
+      </div>
+    </div>
+    
+    <div class="visible-xs visible-sm">
+      <div class="col-xs-12 col-sm-12" id="top_navbar">
+        <nav class="navbar navbar-custom navbar-fixed-top" style="background-color: #201f29">
+          <div class="container-fluid">
+            
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top_navbar_collapsed" aria-expanded="false" style="background-color: #ffffff">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar" style="background-color: #201f29"></span>
+                <span class="icon-bar" style="background-color: #201f29"></span>
+                <span class="icon-bar" style="background-color: #201f29"></span>
+              </button>
+              <%= image_tag('jumbotron.jpg', class: "navbar-brand") %>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="top_navbar_collapsed">
+              <ul class="nav navbar-nav navbar-right">
+                <li><%= link_to "DASH", root_path %></li>
+                <% if current_user.access_right == "teacher" %>
+                <li><%= link_to "DAILY ATTENDANCE", attendancesheets_path %></li>
+                <% end %>
+                <li><%= link_to "LOGOUT", destroy_user_session_path, method: :delete %></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      
+      <div class="col-xs-12 col-sm-12" id="sub_header" style="text-align: center; margin-top: 5rem;">
+        <h4>YMCA University Attendance Management System</h4>
+        <hr></hr>
+      </div>
+    </div>
+    
+    <div class="col-md-1 col-lg-1"></div>
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+      
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="main-content">
+          
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="detail_header">
+              <h4>
+                <i class="glyphicon glyphicon-circle-arrow-right"></i><b>Attendance List</b>
+              </h4>
+              <hr></hr>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+              <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;">Date</label>
+                <%=text_field_tag "", @attendancesheet.attendance_on, class: "form-control", disabled: true %>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+              <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;">Batch</label>
+                <%=text_field_tag "", @attendancesheet.batch, class: "form-control", disabled: true %>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+              <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;">Semester</label>
+                <%=text_field_tag "", @attendancesheet.semester, class: "form-control", disabled: true %>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+              <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;">Subject</label>
+                <%=text_field_tag "", @attendancesheet.subject, class: "form-control", disabled: true %>
+              </div>
+            </div>
+          </div>
+        
+          <hr style="margin-top:0px;"></hr>
+        
+          <div class="row">
+            <div class="col-md-1 col-lg-1"></div>
+              <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                <div id="attendance_table">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Roll</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if @attendancesheet.attendances.any? %>
+                        <% @attendancesheet.attendances.each do |att| %>
+                          <tr>
+                            <td><%= @sno+=1 %></td>
+                            <td><%= att.roll_no %></td>
+                            <% if att.attend_status %>
+                              <td>P</td>
+                            <% else %>
+                              <td>A</td>
+                            <% end %>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+          
+          <hr style="margin-top:10px;"></hr>
+          
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="text-align: center">
+              <%= link_to "Edit Sheet", edit_attendancesheet_path(@attendancesheet), class: "btn btn_highlight" %>     
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="text-align: center">
+              <%= link_to 'Index Sheet', attendancesheets_path, class: "btn btn_highlight" %> 
+            </div>
+          </div>
+          
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+      
+        
+    </div>
+    
+  </div>
+  
+  
+</div>

@@ -1,0 +1,264 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="visible-md visible-lg">
+      <div class="col-md-2 col-lg-2" id="sidebar_menu" style="height: 135vh">
+        
+        <div class="row" id="logo-env">
+          <div class="col-md-12 col-lg-12">
+            <center>
+              <%= image_tag('jumbotron.jpg', id: "logo_image-env") %>
+            </center>
+          </div>
+        </div>
+        <hr></hr>
+        
+        <div class="row" id="main-menu">
+          <div class="col-md-12 col-lg-12" style="margin-bottom: 2rem">
+              <i class="glyphicon glyphicon-dashboard"></i>
+              <%= link_to "DASH", root_path %>
+              <hr></hr>
+          </div>
+          <% if current_user.access_right == "teacher" %>
+          <div class="col-md-12 col-lg-12" style="margin-bottom: 2rem">
+              <i class="glyphicon glyphicon-list-alt"></i>
+              <%= link_to "DAILY ATTENDANCE", attendancesheets_path %>
+              <hr></hr>
+          </div>
+          <% end %>
+          <div class="col-md-12 col-lg-12" style="margin-bottom: 2rem">
+              <i class="glyphicon glyphicon-log-out"></i>
+              <%= link_to "LOGOUT", destroy_user_session_path, method: :delete %>
+              <hr></hr>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="col-md-1 col-lg-1"></div>
+      <div class="col-md-9 col-lg-9" id="main_header">
+        <h3>YMCA University Attendance Management System</h3>
+        <br>
+        <hr></hr>
+      </div>
+    </div>
+    
+    <div class="visible-xs visible-sm">
+      <div class="col-xs-12 col-sm-12" id="top_navbar">
+        <nav class="navbar navbar-custom navbar-fixed-top" style="background-color: #201f29">
+          <div class="container-fluid">
+            
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top_navbar_collapsed" aria-expanded="false" style="background-color: #ffffff">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar" style="background-color: #201f29"></span>
+                <span class="icon-bar" style="background-color: #201f29"></span>
+                <span class="icon-bar" style="background-color: #201f29"></span>
+              </button>
+              <%= image_tag('jumbotron.jpg', class: "navbar-brand") %>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="top_navbar_collapsed">
+              <ul class="nav navbar-nav navbar-right">
+                <li><%= link_to "DASH", root_path %></li>
+                <% if current_user.access_right == "teacher" %>
+                <li><%= link_to "DAILY ATTENDANCE", attendancesheets_path %></li>
+                <% end %>
+                <li><%= link_to "LOGOUT", destroy_user_session_path, method: :delete %></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      
+      <div class="col-xs-12 col-sm-12" id="sub_header" style="text-align: center; margin-top: 5rem;">
+        <h4>YMCA University Attendance Management System</h4>
+        <hr></hr>
+      </div>
+    </div>
+    
+    <div class="col-md-1 col-lg-1"></div>
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+      
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="main-content">
+          
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="detail_header">
+              <h4>
+                <i class="glyphicon glyphicon-circle-arrow-right"></i><b>Dashboard</b>
+              </h4>
+              <hr></hr>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="detail_info">
+              <div class="panel panel-default" id="box-panel" style="background-color: #201f29">
+                
+                <div class="panel-heading" style="background-color: #201f29">
+                  <div class="panel-title" style="color: #FFFFFF">
+                    <center>
+                      <h4>PROFILE</h4>
+                    </center>
+                  </div>
+                </div>
+                
+                <div class="panel-body">
+                  <% if current_user.access_right == 'admin' %>
+                    <pre><b>EMAIL   :  </b><%= current_user.email %></pre>
+                  <% elsif current_user.access_right == 'teacher' %>
+                    <pre><b>FIRST NAME   :  </b><%= @teacher.first_name %></pre>
+                    <pre><b>LAST NAME    :  </b><%= @teacher.last_name %></pre>
+                    <pre><b>CONTACT      :  </b><%= @teacher.phone_no %></pre>
+                    <pre><b>EMAIL        :  </b><%= @teacher.email %></pre>
+                  <% else %>
+                    <pre><b>ROLL NO        :  </b><%= @student.roll_no %></pre>
+                    <pre><b>NAME           :  </b><%= @student.name %></pre>
+                    <pre><b>UNIV. ROLL NO  :  </b><%= @urn %></pre>
+                    <pre><b>BATCH          :  </b><%= @modelName %></pre>
+                  <% end %>
+                </div>
+              </div>  
+            </div>
+          </div>
+          
+          <% if current_user.access_right == 'admin' %>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="detail_header">
+                <h4>
+                  <i class="glyphicon glyphicon-circle-arrow-right"></i><b>Import File</b>
+                </h4>
+                <hr></hr>
+              </div>
+            </div>
+            <%= form_tag main_import_path, multipart: true, id: "importForm" do %>
+              <div class="row">
+                <div class="col-md-2 col-lg-2"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">Batch</label>
+                    <%= select_tag(:selected_model, options_for_select(@model_constants.collect{|m| [m]}, selected: :selected_model ), prompt: "Select Batch", class: "form-control") %>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">File</label>
+                    <%= file_field_tag :file %>
+                  </div>
+                </div>
+                <div class="col-xs-3 col-sm-3"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3" style="text-align: center">
+            		  <%= submit_tag "IMPORT RECORDS", class: "btn btn_highlight" %>
+            	  </div>
+              </div>
+              <hr style="margin-top:1rem;"></hr>
+            <% end %>
+            
+          <% elsif current_user.access_right == 'teacher' %>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="detail_header">
+                <h4>
+                  <i class="glyphicon glyphicon-circle-arrow-right"></i><b>Take Attendance: Select Semester = 6</b>
+                </h4>
+                <hr></hr>
+              </div>
+            </div>
+          
+            <% @model_constants.delete(Teacher) %>
+            <%= form_tag new_attendancesheet_path, method: :get, id: "getSheetForm" do %>
+              <div class="row">
+                <div class="col-md-2 col-lg-2"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">Batch</label>
+                    <%= select_tag(:batch, options_for_select(@model_constants.collect{|m| [m]}, selected: :batch ), prompt: "Select Batch", class: "form-control") %>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">Semester</label>
+                    <%= select_tag(:semester, options_for_select((1..8).collect{|i| [i]}, selected: :semester), prompt: "Select Semester", class: "form-control") %>
+                  </div>
+                </div>
+                <div class="col-xs-3 col-sm-3"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3" style="text-align: center">
+            		  <%= submit_tag "GENERATE SHEET", class: "btn btn_highlight" %>
+            	  </div>
+              </div>
+              <hr style="margin-top:1rem;"></hr>
+            <% end %>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="detail_header">
+                <h4>
+                  <i class="glyphicon glyphicon-circle-arrow-right"></i><b>Print Sheet: Select Semester = 6</b>
+                </h4>
+                <hr></hr>
+              </div>
+            </div>
+            <%= form_tag download_view_path, method: :get do %>
+              <div class="row">
+                <div class="col-md-2 col-lg-2"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">Batch</label>
+                    <%= select_tag(:batch, options_for_select(@model_constants.collect{|m| [m]}, selected: :batch ), prompt: "Select Batch", class: "form-control") %>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">Semester</label>
+                    <%= select_tag(:semester, options_for_select((1..8).collect{|i| [i]}, selected: :semester), prompt: "Select Semester", class: "form-control") %>
+                  </div>
+                </div>
+                <div class="col-xs-3 col-sm-3"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3" style="text-align: center">
+            		  <%= submit_tag "GENERATE SHEET", class: "btn btn_highlight" %>
+            	  </div>
+              </div>
+              <hr style="margin-top:1rem;"></hr>
+            <% end %>
+          <% else %>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="detail_header">
+                <h4>
+                  <i class="glyphicon glyphicon-circle-arrow-right"></i><b>Print Sheet: Select Semester = 6</b>
+                </h4>
+                <hr></hr>
+              </div>
+            </div>
+            <%= form_tag download_view_path, method: :get do %>
+              <div class="row">
+                <div class="col-md-2 col-lg-2"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">Batch</label>
+                    <%= select_tag(:batch, options_for_select([@modelName], selected: :batch ), prompt: "Select Batch", class: "form-control") %>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;">Semester</label>
+                    <%= select_tag(:semester, options_for_select((1..8).collect{|i| [i]}, selected: :semester), prompt: "Select Semester", class: "form-control") %>
+                  </div>
+                </div>
+                <div class="col-xs-3 col-sm-3"></div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3" style="text-align: center">
+            		  <%= submit_tag "GENERATE SHEET", class: "btn btn_highlight" %>
+            	  </div>
+              </div>
+              <hr style="margin-top:1rem;"></hr>
+            <% end %>
+          <% end %>
+          
+        </div>
+      </div>
+      
+    </div>
+      
+        
+    </div>
+    
+  </div>
+  
+  
+</div>
