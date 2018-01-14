@@ -2,6 +2,8 @@ Project Upasthiti: Online Attendance Portal for YMCA UNIVERSITY OF SCIENCE & TEC
 Web Portal Link: https://upasthiti.herokuapp.com/
 
 Description:
+
+
 ![Image](https://user-images.githubusercontent.com/20666867/34917767-7945e49a-f970-11e7-8218-ce592fd4298a.png)
 When the user opens the application, login activity or window appears where students, staff, and admin can login with their respective credentials.
 ![Image](https://user-images.githubusercontent.com/20666867/34917794-de5961d6-f970-11e7-8bd9-4bbe1e911d0f.png)
